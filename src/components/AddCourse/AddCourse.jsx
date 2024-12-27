@@ -10,7 +10,7 @@ const AddCourse = ({ token }) => {
     instructor_name: '',
   });
 
-  const handleSubmit = async (e) => {
+  const handleAddCourse = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -29,39 +29,169 @@ const AddCourse = ({ token }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Title"
-        value={formData.title}
-        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Description"
-        value={formData.description}
-        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Badge Text"
-        value={formData.badge_text}
-        onChange={(e) => setFormData({ ...formData, badge_text: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Badge Color"
-        value={formData.badge_color}
-        onChange={(e) => setFormData({ ...formData, badge_color: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Instructor Name"
-        value={formData.instructor_name}
-        onChange={(e) => setFormData({ ...formData, instructor_name: e.target.value })}
-      />
-      <button type="submit">Add Course</button>
-    </form>
+    <>
+     <Helmet>
+                <title>Add Books|| StoryStacks</title>
+            </Helmet>
+      <div className="w-full max-w-md p-8  rounded-xl mx-auto  h-full  bg-gray-400  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100">
+        
+        <h3 className="text-3xl font-bold text-center mb-8">Add Book</h3>
+        <form onSubmit={handleAddCourse}>
+          {/* form book name */}
+          <div className="flex mb-5">
+            <div className="form-control w-1/2">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <label className="input-group">
+                <input
+                  type="text"
+                  name="bookName"
+                  placeholder="Book Name"
+                  className="input input-bordered w-full"
+                />
+              </label>
+            </div>
+            {/* form book category*/}
+            <div className="form-control w-1/2 ml-4 ">
+              <label className="label">
+                <span className="label-text">Category</span>
+              </label>
+              <div className="input-group">
+                <select
+                  name="category"
+                  className="select select-bordered w-full"
+                >
+                  
+                  <option>Novel</option>
+                  <option>Thriller</option>
+                  <option>History</option>
+                  <option>Drama</option>
+                  <option>Sci-Fi</option>
+                </select>
+              </div>
+            </div>
+            {/*  */}
+          </div>
+          {/* form book Description */}
+          <div className="flex mb-5">
+            <div className="form-control w-1/2">
+              <label className="label">
+                <span className="label-text">Description</span>
+              </label>
+              <label className="input-group">
+                <input
+                  type="text"
+                  name="description"
+                  placeholder="Short Description"
+                  className="input input-bordered w-full"
+                />
+              </label>
+            </div>
+            {/* form book quantity */}
+            <div className="form-control w-1/2 ml-4">
+              <label className="label">
+                <span className="label-text">Quantity</span>
+              </label>
+              <label className="input-group">
+                <input
+                  type="number"
+                  min={1}
+                  name="quantity"
+                  placeholder="Quantity"
+                  className="input input-bordered w-full "
+                  required
+                />
+              </label>
+            </div>
+          </div>
+          {/* form rating */}
+          <div className="flex mb-5">
+            <div className="form-control w-1/2">
+              <label className="label">
+                <span className="label-text">Rating</span>
+              </label>
+              <label className="input-group">
+                <input
+                  type="number"
+                  max={5}
+                  min={1}
+                  name="rating"
+                  placeholder="Rating"
+                  className="input input-bordered w-full"
+                />
+              </label>
+            </div>
+            {/* form author */}
+            <div className="form-control w-1/2 ml-4">
+              <label className="label">
+                <span className="label-text">Author Name</span>
+              </label>
+              <label className="input-group">
+                <input
+                  type="text"
+                  name="author"
+                  placeholder="Author Name"
+                  className="input input-bordered w-full"
+                />
+              </label>
+            </div>
+          </div>
+
+          {/* form row */}
+          <div className="flex mb-5">
+            <div className="form-control w-1/2">
+              <label className="label">
+                <span className="label-text">User Email</span>
+              </label>
+              <label className="input-group">
+                <input
+                  type="text"
+                  defaultValue={user.email}
+                  className="input input-bordered w-full"
+                  readOnly
+                />
+              </label>
+            </div>
+
+            <div className="form-control w-1/2 ml-4">
+              <label className="label">
+                <span className="label-text">Image</span>
+              </label>
+              <label className="input-group">
+                <input
+                  type="text"
+                  name="image"
+                  placeholder="Book Image URL"
+                  className="input input-bordered w-full"
+                />
+              </label>
+            </div>
+          </div>
+          {/* form */}
+
+          <div className="flex mb-5 w-full">
+            <div className="form-control w-full ">
+              <label>Book Content</label>
+              <br />
+              <textarea
+                id="content"
+                className="border"
+                name="content"
+                rows="4"
+                cols="49"
+              ></textarea>
+            </div>
+          </div>
+
+          <input
+            type="submit"
+            value="Add"
+            className="btn btn-block text-xl bg-[#000000] text-[#ccff00] border-none"
+          />
+        </form>
+      </div>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import bg from '../assets/bg.png'
+import axios from "axios";
 
 
 const Login = () => {
@@ -13,10 +14,14 @@ const Login = () => {
     const [loginError, setLoginError] = useState('')
     const [successLogin, setSuccessLogin] = useState('')
 
-    const { register,handleSubmit,formState: { errors },} = useForm()
-    const onSubmit = (data) => {
+    const { register,reset,handleSubmit,formState: { errors },} = useForm()
+    const onSubmit = async(data) => {
       const {email, password} = data
-
+      
+      const info = {
+        email: data.email,
+        password: data.password
+      }
       setLoginError('')
       setSuccessLogin('')
         if(!/@gmail\.com$/.test(email)){
@@ -24,20 +29,19 @@ const Login = () => {
            
         }
 
-    //   // signInUser(email, password)
-    //   .then(result=>{
-    //       console.log(result.user)
-    //       toast.success('Logged in succesfully')
-          
-    //   })
-    // //   console.log(e,'e')
-    // //   e.target.reset()
-
-    //   .catch(error=>{
-    //       console.error(error)
-    //       toast.error(error.code)
-    //   })
-
+  
+        await axios.post('https://react-interview.crd4lc.easypanel.host/api/login', info)
+       .then(res=> {
+        console.log(res.data);
+        if(res.data.status === true) {
+          toast.success('Login Succesfull')
+          reset()
+        }
+      }) 
+      .catch(error=>{
+        console.error(error)
+        toast.error(error.code)
+    })
      
 
     }

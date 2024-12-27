@@ -30,6 +30,7 @@ const Nav = () => {
         <div className="flex-none">
           <ul className="menu menu-horizontal gap-5 px-1">
             <NavLink to='/' className={({isActive})=> isActive? 'font-bold text-primary': 'font-bold'}>Home</NavLink>
+            <NavLink to='/addCourse' className={({isActive})=> isActive? 'font-bold text-primary': 'font-bold'}>Add Course</NavLink>
             <NavLink to='/register' className={({isActive})=> isActive? 'font-bold text-primary': 'font-bold'}>Register</NavLink>
             <NavLink to='/login' className={({isActive})=> isActive? 'font-bold text-primary': 'font-bold'}>Login</NavLink>
           </ul>
