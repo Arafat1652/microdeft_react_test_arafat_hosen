@@ -1,197 +1,147 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
+import { useOutletContext } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const AddCourse = ({ token }) => {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    badge_text: '',
-    badge_color: '',
-    instructor_name: '',
-  });
+const AddCourse = () => {
+  const { token } = useOutletContext();
 
   const handleAddCourse = async (e) => {
     e.preventDefault();
+    const title = e.target.title.value
+    const badge_text = e.target.badge_text.value
+    const badge_color = e.target.badge_color.value
+    const instructor_name = e.target.instructor_name.value
+    const description = e.target.description.value
+    const courseInfo = {title,badge_text, badge_color, instructor_name, description}
+    console.log(courseInfo);
     try {
-      const response = await axios.post(
+      const res = await axios.post(
         'https://react-interview.crd4lc.easypanel.host/api/course',
-        formData,
+        courseInfo,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      alert('Course added successfully!');
-      console.log(response.data);
+     if(res.data.status === true) {
+               toast.success('Added Course Successfully');
+               e.target.reset()
+             }
     } catch (error) {
       console.error(error);
       alert('Failed to add course.');
     }
+
   };
 
+//   {
+//     "title": "React professional course",
+//     "description": "This course is only for professionals who has react expertise",
+//     "badge_text": "Featured",
+//     "badge_color": "red", // #ff0000
+//     "instructor_name": "Naim"
+// }
+
   return (
-    <>
-     <Helmet>
-                <title>Add Books|| StoryStacks</title>
+    <div style={{ backgroundImage: `url(https://s3.envato.com/files/208663800/02_misty-woods.jpg)`}} className="bg-cover bg-center p-8">
+      <Helmet>
+                <title>Add Course|| MicroDeftTest</title>
             </Helmet>
       <div className="w-full max-w-md p-8  rounded-xl mx-auto  h-full  bg-gray-400  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100">
         
-        <h3 className="text-3xl font-bold text-center mb-8">Add Book</h3>
+        <h3 className="text-3xl font-bold text-center mb-8">ADD COURSE</h3>
         <form onSubmit={handleAddCourse}>
-          {/* form book name */}
+          {/* form course title */}
           <div className="flex mb-5">
             <div className="form-control w-1/2">
               <label className="label">
-                <span className="label-text">Name</span>
+                <span className="label-text text-white">Title</span>
               </label>
               <label className="input-group">
                 <input
                   type="text"
-                  name="bookName"
-                  placeholder="Book Name"
+                  name="title"
+                  placeholder="Course Title"
                   className="input input-bordered w-full"
+                  required
                 />
               </label>
             </div>
-            {/* form book category*/}
-            <div className="form-control w-1/2 ml-4 ">
+            {/* badge_text*/}
+           <div className="form-control w-1/2 ml-4">
               <label className="label">
-                <span className="label-text">Category</span>
+                <span className="label-text text-white">Badge Text</span>
               </label>
-              <div className="input-group">
-                <select
-                  name="category"
-                  className="select select-bordered w-full"
-                >
-                  
-                  <option>Novel</option>
-                  <option>Thriller</option>
-                  <option>History</option>
-                  <option>Drama</option>
-                  <option>Sci-Fi</option>
-                </select>
-              </div>
+              <label className="input-group">
+                <input
+                  type="text"
+                  name="badge_text"
+                  placeholder="Badge Text"
+                  className="input input-bordered w-full"
+                  required
+                />
+              </label>
             </div>
             {/*  */}
           </div>
-          {/* form book Description */}
+          {/* badge color */}
           <div className="flex mb-5">
             <div className="form-control w-1/2">
               <label className="label">
-                <span className="label-text">Description</span>
+                <span className="label-text text-white">Badge Color</span>
               </label>
               <label className="input-group">
                 <input
                   type="text"
-                  name="description"
-                  placeholder="Short Description"
+                  name="badge_color"
+                  placeholder="Badge Color"
                   className="input input-bordered w-full"
+                  required
                 />
               </label>
             </div>
-            {/* form book quantity */}
+            {/*instructor_name*/}
             <div className="form-control w-1/2 ml-4">
               <label className="label">
-                <span className="label-text">Quantity</span>
+                <span className="label-text text-white">Instructor Name</span>
               </label>
               <label className="input-group">
                 <input
-                  type="number"
-                  min={1}
-                  name="quantity"
-                  placeholder="Quantity"
+                  type="text"
+                  name="instructor_name"
+                  placeholder="Instructor Name"
                   className="input input-bordered w-full "
                   required
                 />
               </label>
             </div>
           </div>
-          {/* form rating */}
-          <div className="flex mb-5">
-            <div className="form-control w-1/2">
-              <label className="label">
-                <span className="label-text">Rating</span>
-              </label>
-              <label className="input-group">
-                <input
-                  type="number"
-                  max={5}
-                  min={1}
-                  name="rating"
-                  placeholder="Rating"
-                  className="input input-bordered w-full"
-                />
-              </label>
-            </div>
-            {/* form author */}
-            <div className="form-control w-1/2 ml-4">
-              <label className="label">
-                <span className="label-text">Author Name</span>
-              </label>
-              <label className="input-group">
-                <input
-                  type="text"
-                  name="author"
-                  placeholder="Author Name"
-                  className="input input-bordered w-full"
-                />
-              </label>
-            </div>
-          </div>
-
-          {/* form row */}
-          <div className="flex mb-5">
-            <div className="form-control w-1/2">
-              <label className="label">
-                <span className="label-text">User Email</span>
-              </label>
-              <label className="input-group">
-                <input
-                  type="text"
-                  defaultValue={user.email}
-                  className="input input-bordered w-full"
-                  readOnly
-                />
-              </label>
-            </div>
-
-            <div className="form-control w-1/2 ml-4">
-              <label className="label">
-                <span className="label-text">Image</span>
-              </label>
-              <label className="input-group">
-                <input
-                  type="text"
-                  name="image"
-                  placeholder="Book Image URL"
-                  className="input input-bordered w-full"
-                />
-              </label>
-            </div>
-          </div>
-          {/* form */}
-
+        {/* decscription*/}
           <div className="flex mb-5 w-full">
             <div className="form-control w-full ">
-              <label>Book Content</label>
+              <label className='text-white'>Description</label>
               <br />
               <textarea
                 id="content"
                 className="border"
-                name="content"
+                name="description"
                 rows="4"
                 cols="49"
+                required
               ></textarea>
             </div>
           </div>
 
+
           <input
             type="submit"
-            value="Add"
+            value="Add Course"
             className="btn btn-block text-xl bg-[#000000] text-[#ccff00] border-none"
           />
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

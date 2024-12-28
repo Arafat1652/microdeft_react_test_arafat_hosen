@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useOutletContext } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { toast } from "react-toastify";
@@ -10,6 +10,7 @@ import axios from "axios";
 
 
 const Login = () => {
+    const { setToken } = useOutletContext();
 
     const [loginError, setLoginError] = useState('')
     const [successLogin, setSuccessLogin] = useState('')
@@ -35,6 +36,10 @@ const Login = () => {
         console.log(res.data);
         if(res.data.status === true) {
           toast.success('Login Succesfull')
+          const { token } = res.data.data;
+          console.log(token);
+          setToken(token); 
+          localStorage.setItem('authToken', token); 
           reset()
         }
       }) 

@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import { HelmetProvider } from 'react-helmet-async';
 import Login from './Authentication/Login';
 import Register from './Authentication/Register';
+import AddCourse from './components/AddCourse/AddCourse';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,11 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register/>,
-      }
+      },
+      {
+        path: '/addCourse',
+        element: <AddCourse/>,
+      },
     ],
   },
 ]);
