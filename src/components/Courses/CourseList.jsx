@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useOutletContext } from "react-router-dom";
+import Card from "./Card";
 
 const CourseList = () => {
   const { token } = useOutletContext();
@@ -21,11 +22,11 @@ const CourseList = () => {
           }
         );
         // console.log(response.data.data.data);
-        setCourses(response.data.data.data); // Assuming the data structure is `data.data`
+        setCourses(response.data.data.data); 
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError("Failed to fetch courses. Please try again.");
+        setError("Failed. Please try again.");
         setLoading(false);
       }
     };
@@ -39,7 +40,9 @@ const CourseList = () => {
   }, [token]);
 
   if (loading) {
-    return <div className="text-center text-white mt-10">Loading...</div>;
+    return <div className="text-center">
+    <span className="loading loading-spinner loading-lg text-error mt-24"></span>
+    </div>
   }
 
   if (error) {
@@ -47,33 +50,17 @@ const CourseList = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-5">
+    <div className="pb-20 min-h-screen w-[100%] border-[#6443ea66] border-t-2 rounded-t-[80px] rounded-b-none"> 
+      <div className="min-h-screen container mx-auto p-5">
       <Helmet>
         <title>Courses || App</title>
       </Helmet>
-      <h2 className="text-3xl font-bold text-center mb-8">Available Courses</h2>
+      <h2 className="text-4xl font-bold text-center my-20">Our Available Courses</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.map((course) => (
-          <div
-            key={course.id}
-            className="bg-gray-800 rounded-lg shadow-md overflow-hidden"
-          >
-            <div className="p-5">
-              <div
-                className={`inline-block px-3 py-1 rounded-full text-sm font-semibold text-white mb-3`}
-                style={{ backgroundColor: course.badge_color }}
-              >
-                {course.badge_text}
-              </div>
-              <h3 className="text-xl font-bold mb-3">{course.title}</h3>
-              <p className="text-gray-400 mb-3">{course.description}</p>
-              <p className="text-gray-300 text-sm">
-                Instructor: {course.instructor_name}
-              </p>
-            </div>
-          </div>
+        {courses.map((course) => ( <Card course={course} key={course.id}/>
         ))}
       </div>
+    </div>
     </div>
   );
 };

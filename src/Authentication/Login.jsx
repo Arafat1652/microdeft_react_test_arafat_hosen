@@ -54,7 +54,7 @@ const Login = () => {
 
     return (
         
-      <div style={{ backgroundImage: `url(${bg})`}} className="bg-cover bg-center min-h-screen pt-10" >
+      <div style={{ backgroundImage: `url(${bg})`}} className="bg-cover bg-center min-h-screen p-20" >
         <Helmet>
                 <title>Login || StoryStacks</title>
         </Helmet>
@@ -73,7 +73,15 @@ const Login = () => {
                 <input type="password" name="password" id="password" placeholder="Your Password" className="w-full px-4 py-3 rounded-md border-gray-700  text-black focus:border-violet-400" {...register("password", { required: true })}  />
                 {errors.password && <span className="text-red-400">This field is required</span>}
             </div>
-            <button className="block w-full p-3 text-center rounded-sm bg-[#000000] text-[#ccff00] ">Sign in</button>
+            <button className="relative inline-block px-4 mr-2 py-2 font-medium group w-full">
+            <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-primary group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+            <span className="absolute inset-0 w-full h-full bg-white border-2 border-secondary group-hover:bg-primary"></span>
+            <input
+              type="submit"
+              value="Login"
+              className="relative text-black group-hover:text-white"
+            />
+          </button>
         </form>
 
         <p className="text-green-500">{successLogin}</p>
